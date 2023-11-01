@@ -1,5 +1,5 @@
 {
-  "name": "@zwi/eslint-config",
+  "name": "@jasonman34/eslint-config",
   "description": "ESLint configuration by the ZWI project",
   "version": "1.0.0",
   "main": "index.js",

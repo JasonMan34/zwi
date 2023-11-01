@@ -8,7 +8,7 @@
     "prettier": "cd $INIT_CWD && prettier \"src/**/*.ts\" -c",
     "p": "pnpm run prettier",
     "prepare": "husky install",
-    "lint:all": "eslint \"packages/**/*.ts\"",
+    "lint:all": "eslint \"packages/**/*.ts\" --no-error-on-unmatched-pattern",
     "prettier:all": "prettier \"packages/**/*.{ts,js}\" -c",
     "p:all": "pnpm run prettier:all"
   },
@@ -21,8 +21,8 @@
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
-    "@zwi/eslint-config": "workspace:*",
-    "@zwi/prettier-config": "workspace:*",
+    "@jasonman34/eslint-config": "workspace:*",
+    "@jasonman34/prettier-config": "workspace:*",
     "eslint": "^8.52.0",
     "husky": "^8.0.3",
     "prettier": "^3.0.3",

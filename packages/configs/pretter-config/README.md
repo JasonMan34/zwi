@@ -1,11 +1,11 @@
-# @zwi/prettier-config
+# jasonman34/prettier-config
 
 > Prettier configuration by the ZWI project
 
 ## Installation
 
 ```
-npm add -D @zwi/prettier-config
+npm add -D jasonman34/prettier-config
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ Create the following `prettier.json` file:
 
 ```json
 {
-  "extends": "@zwi/prettier-config"
+  "extends": "@jasonman34/prettier-config"
 }
 ```
 
