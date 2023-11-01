@@ -1,11 +1,11 @@
-# jasonman34/prettier-config
+# @jasonman34/prettier-config
 
 > Prettier configuration by the ZWI project
 
 ## Installation
 
 ```
-npm add -D jasonman34/prettier-config
+npm add -D @jasonman34/prettier-config
 ```
 
 ## Usage
