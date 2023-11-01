@@ -1,0 +1,40 @@
+{
+  "name": "zwi",
+  "version": "1.0.0",
+  "description": "A monorepo for managing packages of the ZWI project",
+  "type": "module",
+  "scripts": {
+    "lint": "cd $INIT_CWD && pnpm run lint",
+    "prettier": "cd $INIT_CWD && prettier \"src/**/*.ts\" -c",
+    "p": "pnpm run prettier",
+    "prepare": "husky install",
+    "lint:all": "eslint \"packages/**/*.ts\"",
+    "prettier:all": "prettier \"packages/**/*.{ts,js}\" -c",
+    "p:all": "pnpm run prettier:all"
+  },
+  "keywords": [
+    "zwi"
+  ],
+  "author": {
+    "name": "Jason Zwi",
+    "email": "JasonErlMan@gmail.com"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonMan34/zwi.git"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "@zwi/eslint-config": "workspace:*",
+    "@zwi/prettier-config": "workspace:*",
+    "eslint": "^8.52.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  }
+}
