@@ -1,5 +1,7 @@
 {
   "name": "@zwi/eslint-config",
+  "description": "ESLint configuration by the ZWI project",
+  "version": "1.0.0",
   "main": "index.js",
   "files": [
     "index.js"
@@ -14,5 +16,22 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0"
+  },
+  "keywords": [
+    "zwi",
+    "eslint",
+    "eslint-config"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Jason Zwi",
+    "email": "JasonErlMan@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonMan34/zwi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JasonMan34/zwi/issues"
   }
 }

@@ -15,15 +15,6 @@
   "keywords": [
     "zwi"
   ],
-  "author": {
-    "name": "Jason Zwi",
-    "email": "JasonErlMan@gmail.com"
-  },
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JasonMan34/zwi.git"
-  },
   "engines": {
     "node": ">=20.9"
   },
@@ -36,5 +27,17 @@
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jason Zwi",
+    "email": "JasonErlMan@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonMan34/zwi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JasonMan34/zwi/issues"
   }
 }
