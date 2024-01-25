@@ -1,0 +1,7 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+
+body {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}

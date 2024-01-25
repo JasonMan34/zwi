@@ -1,2 +1,17 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<nav id="navbar">
+  Quantum Tic Tac Toe
+</nav>
+
+<style lang="scss">
+  @import 'mixins.scss';
+
+  #navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+    padding: 12px;
+    @include primary
+  }
+</style>
