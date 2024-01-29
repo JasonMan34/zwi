@@ -19,11 +19,14 @@ body {
     aspect-ratio: 1;
     font-size: 24px;
     font-weight: bold;
-    cursor: pointer;
     background-color: #ddd;
-  }
 
-  .cell:hover {
-    background-color: #ccc;
+    &:not(:disabled) {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #ccc;
+      }
+    }
   }
 }

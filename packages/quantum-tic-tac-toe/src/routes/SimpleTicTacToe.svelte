@@ -1,35 +1,46 @@
 <script lang="ts" context="module">
-  export type OnClickParams = { index: number };
+  export type OnClickParams = { cellIndex: number; gameIndex: number };
 </script>
 
 <script lang="ts">
-  import { type Player, type SimpleBoard } from '$lib';
+  import { getWinner, type Letter, type Player, type Players, type SimpleBoard } from '$lib';
   import { createEventDispatcher } from 'svelte';
 
-  export let board: SimpleBoard;
-  export let winner: Player | null;
-
   const dispatch = createEventDispatcher<{ click: OnClickParams }>();
+
+  // export let players: Players;
+  export let winner: Player | null;
+  export let board: SimpleBoard;
+  export let gameIndex: number;
 </script>
 
 <div class="simple-tic-tac-toe">
   {#if winner}
-    <p class="winner">Winner: {winner}</p>
+    <div
+      style={`font-size: 144px; display: flex; justify-content: center; align-items: center; height: 350px; color: ${winner.color}`}
+    >
+      {winner.letter}
+    </div>
+  {:else}
+    <div class="board">
+      {#each board as value, cellIndex}
+        <button
+          type="button"
+          disabled={board[cellIndex] !== null}
+          class="cell"
+          data-index={cellIndex}
+          on:click={() => dispatch('click', { cellIndex, gameIndex: gameIndex })}
+        >
+          {value || ''}
+        </button>
+      {/each}
+    </div>
   {/if}
-
-  <div class="board">
-    {#each board as value, index}
-      <button type="button" class="cell" data-index={index} on:click={() => dispatch('click', { index })}
-        >{value || ''}</button
-      >
-    {/each}
-  </div>
 </div>
-
 
 <style lang="scss">
   @import 'mixins.scss';
-  
+
   .winner {
     margin-top: 10px;
     font-size: 20px;

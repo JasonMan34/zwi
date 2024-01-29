@@ -1,5 +1,6 @@
 export type Letter = 'X' | 'O';
-export type Player = { name: string; letter: Letter };
+export type Player = { letter: Letter; name: string; color: string };
+export type Players = Record<Letter, Player>;
 
 export type Tile = Letter | null;
 export type Board<T = Tile> = [T, T, T, T, T, T, T, T, T];

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getNewBoard, type Board, type SimpleBoard, type Player } from '$lib';
+  import { getNewBoard, type Board, type SimpleBoard, type Player, type Players, type Letter, getWinner } from '$lib';
   import SimpleTicTacToe, { type OnClickParams } from './SimpleTicTacToe.svelte';
 
   type QuantumSubGame = {
@@ -7,37 +7,62 @@
     board: SimpleBoard;
   };
 
-  const players: [Player, Player] = [
-    { name: 'X', letter: 'X' },
-    { name: 'O', letter: 'O' },
-  ];
+  const players: Players = {
+    X: { letter: 'X', name: 'Adam', color: '#00FF49' },
+    O: { letter: 'O', name: 'Eve', color: '#FF0049' },
+  };
 
-  let activeBoardIndex = 0;
-  let currentPlayerIndex = 0;
+  let activeBoardIndex: number | null = null;
+  let currentPlayer: Letter = 'X';
   let winner: null;
-  const simpleGames = Array(9)
+  const games = Array(9)
     .fill(0)
     .map((_) => ({
       winner: null,
       board: getNewBoard(),
     })) as Board<QuantumSubGame>;
 
-  const getCurrentPlayer = () => players[currentPlayerIndex];
+  const checkWinner = (game: QuantumSubGame) => {
+    const winningLetter = getWinner(game.board);
+
+    console.log(winningLetter);
+    if (winningLetter) {
+      game.winner = players[winningLetter];
+    }
+  };
+
+  const clickCell = (gameIndex: number, cellIndex: number) => {
+    games[gameIndex].board[cellIndex] = currentPlayer;
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  };
+
+  const changeActiveGame = (gameIndex: number) => {
+    if (games[gameIndex].winner) {
+      activeBoardIndex = null;
+    } else {
+      activeBoardIndex = gameIndex;
+    }
+  };
 
   const onClick = (e: CustomEvent<OnClickParams>) => {
-    const tileIndex = e.detail.index;
-    simpleGames[activeBoardIndex].board[tileIndex] = getCurrentPlayer().letter;
-    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
-    activeBoardIndex = tileIndex;
+    const { cellIndex, gameIndex } = e.detail;
+
+    clickCell(gameIndex, cellIndex);
+    checkWinner(games[gameIndex]);
+    changeActiveGame(cellIndex);
   };
 </script>
 
 <div id="root">
   <nav id="navbar">Quantum Tic Tac Toe</nav>
   <main class="quantum-board board">
-    {#each simpleGames as simpleGame, index}
-      <div class="simple-game-wrapper" data-active={activeBoardIndex === index}  data-index={index}>
-        <SimpleTicTacToe board={simpleGame.board} winner={simpleGame.winner} on:click={onClick} />
+    {#each games as game, index}
+      <div
+        class="simple-game-wrapper"
+        data-disabled={game.winner || (activeBoardIndex !== null && activeBoardIndex !== index)}
+        data-index={index}
+      >
+        <SimpleTicTacToe board={game.board} gameIndex={index} winner={game.winner} on:click={onClick} />
       </div>
     {/each}
   </main>
@@ -65,7 +90,7 @@
   .simple-game-wrapper {
     padding: 0.25rem;
 
-    &[data-active='false'] {
+    &[data-disabled='true'] {
       :global(.simple-tic-tac-toe) {
         opacity: 0.3;
         pointer-events: none;
