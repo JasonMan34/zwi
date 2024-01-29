@@ -5,3 +5,25 @@ body {
   background-color: var(--bg-color);
   color: var(--font-color);
 }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0px;
+
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ddd;
+  }
+
+  .cell:hover {
+    background-color: #ccc;
+  }
+}

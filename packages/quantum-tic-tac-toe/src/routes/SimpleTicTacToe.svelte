@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export type OnClickParams = { index: number };
+</script>
+
 <script lang="ts">
   import { type Player, type SimpleBoard } from '$lib';
   import { createEventDispatcher } from 'svelte';
@@ -5,7 +9,8 @@
   export let board: SimpleBoard;
   export let winner: Player | null;
 
-  const dispatch = createEventDispatcher();
+
+  const dispatch = createEventDispatcher<{ click: OnClickParams }>();
 </script>
 
 <div class="simple-tic-tac-toe">
@@ -21,30 +26,6 @@
 </div>
 
 <style>
-  .board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    max-width: 300px;
-    margin: 20px auto;
-  }
-
-  .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 60px;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #ddd;
-  }
-
-  .cell:hover {
-    background-color: #ccc;
-  }
-
   .winner {
     margin-top: 10px;
     font-size: 20px;
