@@ -25,18 +25,20 @@
   const getCurrentPlayer = () => players[currentPlayerIndex];
 
   const onClick = (e: CustomEvent<OnClickParams>) => {
-    simpleGames[activeBoardIndex].board[e.detail.index] = getCurrentPlayer().letter;
+    const tileIndex = e.detail.index;
+    simpleGames[activeBoardIndex].board[tileIndex] = getCurrentPlayer().letter;
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
-    activeBoardIndex++;
-    activeBoardIndex %= 9;
+    activeBoardIndex = tileIndex;
   };
 </script>
 
 <div id="root">
   <nav id="navbar">Quantum Tic Tac Toe</nav>
   <main class="quantum-board board">
-    {#each simpleGames as simpleGame}
-      <SimpleTicTacToe board={simpleGame.board} winner={simpleGame.winner} on:click={onClick} />
+    {#each simpleGames as simpleGame, index}
+      <div class="simple-game-wrapper" data-active={activeBoardIndex === index}  data-index={index}>
+        <SimpleTicTacToe board={simpleGame.board} winner={simpleGame.winner} on:click={onClick} />
+      </div>
     {/each}
   </main>
 </div>
@@ -60,6 +62,20 @@
     @include primary;
   }
 
+  .simple-game-wrapper {
+    padding: 0.25rem;
+
+    &[data-active='false'] {
+      :global(.simple-tic-tac-toe) {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
+    @include board;
+    border-color: blue;
+  }
+
   .quantum-board {
     min-width: 0;
     min-height: 0;
@@ -67,9 +83,7 @@
     aspect-ratio: 1;
     align-self: center;
 
-    :global(.simple-tic-tac-toe) {
-      border: 2px solid red;
-    }
+    padding: 16px;
   }
 
   @media (orientation: portrait) {
