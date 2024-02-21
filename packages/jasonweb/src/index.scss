@@ -1,4 +1,10 @@
-#root {
-  min-height: 100lvh;
-  background: rgb(15, 23, 42);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: rgb(15, 23, 42);
+    color: rgb(148, 163, 184);
+  }
 }
