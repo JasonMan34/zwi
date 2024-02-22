@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import { ExperienceItem, experiences } from './experiences';
+
 function Header() {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 py-12">
@@ -80,16 +83,106 @@ function Link(props: React.ComponentPropsWithoutRef<'a'>) {
   );
 }
 
+function About() {
+  return (
+    <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
+      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+          Experience
+        </h2>
+      </div>
+      I am a <Link href="https://www.linkedin.com/in/itamar-zwi/">Full Stack Developer</Link> with a
+      passion for programming and logical puzzles. I fell in love with the world of programming when
+      I was 14, and made a mod for the game{' '}
+      <Link href="https://gmod.facepunch.com/">Garry's Mod</Link>. Since then, I've continued to
+      dive into the world of software development, eager to learn and improve as much as I can.
+    </section>
+  );
+}
+
+function ExperienceCard(props: ExperienceItem) {
+  const { company, description, tags, title } = props;
+  const start = dayjs(props.start).format('MM/YYYY');
+  const end = !props.end ? 'Present' : dayjs(props.end).format('MM/YYYY');
+
+  return (
+    <li className="mb-12">
+      <div className="grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:bg-slate-800/50 lg:hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg">
+        <header
+          className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
+          aria-label={`${start} to ${end}`}
+        >
+          {start} — {end}
+        </header>
+        <div className="z-10 sm:col-span-6">
+          <h3 className="font-medium leading-snug text-slate-200">
+            <div>
+              <a
+                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
+                aria-label={`${title} at ${company} (opens in a new tab)`}
+              >
+                <span>
+                  {title} · <span className="inline-block">{company}</span>
+                </span>
+              </a>
+            </div>
+            <div>
+              <div className="text-slate-500" aria-hidden="true">
+                {title}
+              </div>
+            </div>
+          </h3>
+          <p className="mt-2 text-sm leading-normal">{description}</p>
+          <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
+            {tags.map((tag) => (
+              <li className="mr-1.5 mt-2" key={tag.name}>
+                <a
+                  className="flex items-center rounded-full bg-teal-400/10 text-teal-300 hover:bg-teal-400/15 hover:text-teal-400 px-3 py-1 text-xs font-medium leading-5 "
+                  href={tag.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={`${tag.name} (opens in a new tab)`}
+                  title={tag.name}
+                >
+                  {tag.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+function Experience() {
+  return (
+    <section
+      id="experience"
+      className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+      aria-label="Work experience"
+    >
+      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+          Experience
+        </h2>
+      </div>
+      <div>
+        <ol>
+          {experiences.map((exp) => (
+            <ExperienceCard key={exp.start.getTime()} {...exp} />
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 function Main() {
   return (
     <main className="pt-24 lg:w-1/2 lg:py-24">
-      <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
-        I am a <Link href="https://www.linkedin.com/in/itamar-zwi/">Full Stack Developer</Link> with
-        a passion for programming and logical puzzles. I fell in love with the world of programming
-        when I was 14, and made a mod for the game{' '}
-        <Link href="https://gmod.facepunch.com/">Garry's Mod</Link>. Since then, I've continued to
-        dive into the world of software development, eager to learn and improve as much as I can.
-      </section>
+      <About />
+      <Experience />
     </main>
   );
 }

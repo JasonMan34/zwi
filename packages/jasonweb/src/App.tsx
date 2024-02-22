@@ -3,10 +3,10 @@ import './index.scss';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './features/Home';
-import useMousePosition from './hooks/useMousePosition';
+import useSmoothMousePosition from './hooks/useSmoothMousePosition';
 
 function GradientOnMouse() {
-  const mousePos = useMousePosition();
+  const mousePos = useSmoothMousePosition();
 
   return (
     <div
