@@ -65,7 +65,7 @@ export const experiences: ExperienceItem[] = [
     start: new Date(2020, 2, 1),
     end: new Date(2022, 2, 1),
     title: 'Lead Full Stack Developer',
-    company: 'IDF - C4I Corps (Mamram)',
+    company: 'IDF Mamram',
     description:
       'Lead the development of a medical records system and an appointment scheduling system. Designed and implemented architectural solutions for systems with complex logical processes and high availability under heavy load, as well as serverless functions for integrations with external services.',
     tags: [
@@ -84,7 +84,7 @@ export const experiences: ExperienceItem[] = [
     start: new Date(2019, 2, 1),
     end: new Date(2020, 2, 1),
     title: 'Junior Backend Developer',
-    company: 'IDF - C4I Corps (Mamram)',
+    company: 'IDF Mamram',
     description:
       'Developed a medical records system by replacing a legacy VBScript codebase with C#',
     tags: [CShrap, DotNet, OracleDB],
