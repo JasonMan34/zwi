@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './features/Home';
 import useSmoothMousePosition from './hooks/useSmoothMousePosition';
+import Minesweeper from './features/Minesweeper';
 
 function GradientOnMouse() {
   const mousePos = useSmoothMousePosition();
@@ -25,6 +26,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="minesweeper">
+              <Route path="" element={<span>Minesweeper</span>} />
+              <Route path="sandbox" element={<span>Sandbox</span>} />
+            </Route>
           </Routes>
         </Router>
       </div>
