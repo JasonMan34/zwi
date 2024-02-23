@@ -115,12 +115,12 @@ function ExperienceCard(props: ExperienceItem) {
           className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
           aria-label={`${start} to ${end}`}
         >
-          {start} — {end}
+          {start} —<br /> {end}
         </header>
         <div className="z-10 sm:col-span-6">
           <h3 className="font-medium leading-snug text-slate-200">
             <div>
-              <span className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300 text-base">
+              <span className="inline-flex items-baseline font-medium leading-tight text-slate-200 text-base">
                 {title} · <span className="inline-block">{company}</span>
               </span>
             </div>

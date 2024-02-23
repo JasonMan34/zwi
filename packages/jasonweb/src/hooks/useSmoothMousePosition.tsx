@@ -4,42 +4,34 @@ import useMousePosition from './useMousePosition';
 
 const useSmoothMousePosition = (smoothingFactor = 0.04) => {
   const rawMousePosition = useMousePosition();
-  const [smoothedPosition, setSmoothedPosition] = useState(rawMousePosition);
+  const [smoothedPosition, setSmoothedPosition] = useState(() => ({
+    x: rawMousePosition.current.x,
+    y: rawMousePosition.current.x,
+  }));
 
   useEffect(() => {
-    let animationFrameId: number;
-
     const smoothPosition = () => {
-      setSmoothedPosition((prevPosition) => {
-        if (
-          Math.abs(rawMousePosition.x - prevPosition.x) < 10 &&
-          Math.abs(rawMousePosition.y - prevPosition.y) < 10
-        ) {
-          return prevPosition;
+      setSmoothedPosition((prev) => {
+        const curr = rawMousePosition.current;
+
+        if (Math.abs(curr.x - prev.x) < 10 && Math.abs(curr.y - prev.y) < 10) {
+          return curr;
         }
 
         return {
-          x: lerp(prevPosition.x, rawMousePosition.x, smoothingFactor),
-          y: lerp(prevPosition.y, rawMousePosition.y, smoothingFactor),
+          x: lerp(prev.x, curr.x, smoothingFactor),
+          y: lerp(prev.y, curr.y, smoothingFactor),
         };
       });
-
-      animationFrameId = requestAnimationFrame(smoothPosition);
     };
 
-    smoothPosition();
-
-    return () => cancelAnimationFrame(animationFrameId);
+    const intervalId = setInterval(smoothPosition, 7); // support max 144hz
+    return () => clearInterval(intervalId);
   }, [rawMousePosition, smoothingFactor]);
 
   return smoothedPosition;
 };
 
-function lerp(prev: number, cur: number, factor: number) {
-  const distance = Math.sqrt(Math.abs(prev - cur));
-  const f = factor * (distance && 1 - 1 / distance);
-
-  return (1 - f) * prev + f * cur;
-}
+const lerp = (prev: number, cur: number, factor: number) => (1 - factor) * prev + factor * cur;
 
 export default useSmoothMousePosition;
