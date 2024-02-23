@@ -3,6 +3,7 @@ import './styles.scss';
 import { useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom'; // Assuming react-router-dom is used for routing
 
+import { useForceUpdate } from '../../hooks/useForceUpdate';
 import { AutoPlayer } from './game/auto-player';
 import { MinesweeperGame } from './game/minesweeper-game';
 import { sleep } from './game/utils';
@@ -23,7 +24,32 @@ export function Component() {
 
   const autoPlayerDelay = useMemo(() => Math.round(101 - 10 * playerSpeed), [playerSpeed]);
 
-  const [game, setGame] = useState(() => new MinesweeperGame(WIDTH, HEIGHT, MINE_COUNT, isSandbox));
+  const forceUpdate = useForceUpdate();
+  const [game, setGame] = useState(() => {
+    const innerGame = new MinesweeperGame(WIDTH, HEIGHT, MINE_COUNT, isSandbox);
+
+    const startTimer = () => {
+      timeInterval.current = setInterval(() => {
+        setTime((p) => p + 1);
+      }, 1000);
+    };
+
+    const stopTimer = () => {
+      if (timeInterval.current) {
+        clearInterval(timeInterval.current);
+      }
+    };
+
+    innerGame.onGameInit(startTimer);
+    innerGame.onGameLose(stopTimer);
+    innerGame.onGameWin(stopTimer);
+    innerGame.onUpdate(() => {
+      console.log('I was called');
+      forceUpdate();
+    });
+
+    return innerGame;
+  });
   const [player, setPlayer] = useState(() => new AutoPlayer(game, !autoPlaySafe));
 
   const [time, setTime] = useState(0);
@@ -49,6 +75,7 @@ export function Component() {
     game.onGameInit(startTimer);
     game.onGameLose(stopTimer);
     game.onGameWin(stopTimer);
+    game.onUpdate(forceUpdate);
   };
 
   const autoPlay = async () => {
@@ -79,49 +106,6 @@ export function Component() {
     return 'ms-face ms-face-neutral';
   }, [game.isGameWon, game.isGameLost]);
 
-  const assets = [
-    'border_hor_2x.png',
-    'border_middle_left_2x.png',
-    'border_middle_right_2x.png',
-    'border_vert_2x.png',
-    'corner_bottom_left_2x.png',
-    'corner_bottom_right_2x.png',
-    'corner_up_left_2x.png',
-    'corner_up_right_2x.png',
-    'd0.svg',
-    'd1.svg',
-    'd2.svg',
-    'd3.svg',
-    'd4.svg',
-    'd5.svg',
-    'd6.svg',
-    'd7.svg',
-    'd8.svg',
-    'd9.svg',
-    'face_active.svg',
-    'face_lost.svg',
-    'face_neutral.svg',
-    'face_pressed.svg',
-    'face_won.svg',
-    'flag_wrong.svg',
-    'flag.svg',
-    'hidden.svg',
-    'logo.png',
-    'mine_red.svg',
-    'mine.svg',
-    'nums_background.svg',
-    'pressed.svg',
-    'type0.svg',
-    'type1.svg',
-    'type2.svg',
-    'type3.svg',
-    'type4.svg',
-    'type5.svg',
-    'type6.svg',
-    'type7.svg',
-    'type8.svg',
-  ];
-
   return (
     <div id="minesweeper-wrapper" className="flex flex-col justify-center mt-16" dir="ltr">
       <div className="flex flex-row justify-center px-4 space-x-3">
@@ -130,7 +114,6 @@ export function Component() {
             <label className="inline-block" htmlFor="showIndexesCheckbox">
               <input
                 id="showIndexesCheckbox"
-                className="checkbox"
                 type="checkbox"
                 checked={showIndexes}
                 onChange={(e) => setShowIndexes(e.target.checked)}
@@ -142,7 +125,6 @@ export function Component() {
             <label className="inline-block" htmlFor="autoPlayerShouldGuessCheckbox">
               <input
                 id="autoPlayerShouldGuessCheckbox"
-                className="checkbox"
                 type="checkbox"
                 checked={autoPlaySafe}
                 onChange={(e) => setAutoPlaySafe(e.target.checked)}
@@ -155,7 +137,6 @@ export function Component() {
               <label className="inline-block" htmlFor="restartOnFailureCheckbox">
                 <input
                   id="restartOnFailureCheckbox"
-                  className="checkbox"
                   type="checkbox"
                   checked={restartOnFailure}
                   onChange={(e) => setRestartOnFailure(e.target.checked)}

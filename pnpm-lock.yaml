@@ -105,6 +105,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.19
         version: 18.2.19
+      '@types/shuffle-array':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.0.2
         version: 7.0.2(@typescript-eslint/parser@7.0.2)(eslint@8.56.0)(typescript@5.2.2)
@@ -1261,6 +1264,10 @@ packages:
 
   /@types/semver@7.5.4:
     resolution: {integrity: sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==}
+
+  /@types/shuffle-array@1.0.5:
+    resolution: {integrity: sha512-mwqFRdqxNpraOhjjW/50Ejs7Z025pB7tnf/yM2tNZ6DRuZLGOd1UWX0u9a+aK+xBQFtLs7YStVpumGoNm2Ta/g==}
+    dev: true
 
   /@types/unist@3.0.1:
     resolution: {integrity: sha512-ue/hDUpPjC85m+PM9OQDMZr3LywT+CT6mPsQq8OJtCLiERkGRcQUFvu9XASF5XWqyZFXbf15lvb3JFJ4dRLWPg==}

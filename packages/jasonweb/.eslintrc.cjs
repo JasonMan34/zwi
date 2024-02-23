@@ -15,6 +15,7 @@ module.exports = {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/jsx-props-no-spreading': 'off',
     'react/destructuring-assignment': 'off',
+    'react-refresh/only-export-components': 'off',
     'import/no-default-export': 'off',
   },
 };

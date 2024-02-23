@@ -13,7 +13,10 @@ function MinesweeperBoard({
       {showIndexes && (
         <div className="flex flex-row ml-[28px]">
           {game.board[0].map((_, colIndex) => (
-            <div className="w-[28px] text-center">{colIndex}</div>
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={colIndex} className="w-[28px] text-center">
+              {colIndex}
+            </div>
           ))}
         </div>
       )}
@@ -23,7 +26,7 @@ function MinesweeperBoard({
           {showIndexes && <div className="w-[28px] text-center">{rowIndex}</div>}
           {row.map((tile, colIndex) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Tile key={colIndex} tile={tile} />
+            <Tile key={`${colIndex}-${tile.isRevealed}-${tile.isPeaking}`} tile={tile} />
           ))}
         </div>
       ))}

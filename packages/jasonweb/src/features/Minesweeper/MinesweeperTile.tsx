@@ -1,4 +1,5 @@
 import { type MouseEventHandler, useMemo } from 'react';
+import React from 'react';
 
 import { type MinesweeperTile as MinesweeperTileInterface } from './game/minesweeper-tile';
 
@@ -12,7 +13,7 @@ const RMB = 0x2;
 const LMC = 0;
 const RMC = 2;
 
-export function MinesweeperTile({ tile }: { tile: MinesweeperTileInterface }) {
+function MinesweeperTile({ tile }: { tile: MinesweeperTileInterface }) {
   const flagClass = useMemo(() => {
     if (tile.isFlagged) {
       if (tile.game.isGameLost && !tile.isMine) return 'ms-tile-flag-wrong';
@@ -110,4 +111,4 @@ export function MinesweeperTile({ tile }: { tile: MinesweeperTileInterface }) {
   );
 }
 
-export default MinesweeperTile;
+export default React.memo(MinesweeperTile);

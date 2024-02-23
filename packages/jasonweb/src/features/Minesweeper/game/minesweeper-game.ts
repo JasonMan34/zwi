@@ -1,5 +1,6 @@
 import shuffleArray from 'shuffle-array';
-import { MinesweeperTile, TileStatus } from './minesweeper-tile';
+
+import { MinesweeperTile, type TileStatus } from './minesweeper-tile';
 
 export type Callback = () => void | Promise<void>;
 
@@ -17,6 +18,7 @@ export class MinesweeperGame {
   public initiated: boolean = false;
   public isGameLost: boolean = false;
   public isGameWon: boolean = false;
+  public onUpdateEventListeners: Callback[] = [];
   private gameInitEventListeners: Callback[] = [];
   private gameLostEventListeners: Callback[] = [];
   private gameWinEventListeners: Callback[] = [];
@@ -115,6 +117,10 @@ export class MinesweeperGame {
     return this.allTiles.filter((tile) => statuses.includes(tile.status));
   }
 
+  public onUpdate(cb: Callback) {
+    this.onUpdateEventListeners.push(cb);
+  }
+
   public onGameLose(cb: Callback) {
     this.gameLostEventListeners.push(cb);
   }
@@ -128,7 +134,7 @@ export class MinesweeperGame {
   }
 
   public async waitForEnd(timeout?: number) {
-    return new Promise<void>((resolve, reject) => {
+    return await new Promise<void>((resolve, reject) => {
       this.onGameLose(() => resolve());
       this.onGameWin(() => resolve());
 

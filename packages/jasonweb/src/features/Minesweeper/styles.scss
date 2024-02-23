@@ -171,3 +171,25 @@
 .ms-score {
   @apply flex flex-row px-1 space-x-1;
 }
+
+#minesweeper-wrapper::after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  content: url('/assets/border_hor_2x.png') url('/assets/border_middle_left_2x.png')
+    url('/assets/border_middle_right_2x.png') url('/assets/border_vert_2x.png')
+    url('/assets/corner_bottom_left_2x.png') url('/assets/corner_bottom_right_2x.png')
+    url('/assets/corner_up_left_2x.png') url('/assets/corner_up_right_2x.png') url('/assets/d0.svg')
+    url('/assets/d1.svg') url('/assets/d2.svg') url('/assets/d3.svg') url('/assets/d4.svg')
+    url('/assets/d5.svg') url('/assets/d6.svg') url('/assets/d7.svg') url('/assets/d8.svg')
+    url('/assets/d9.svg') url('/assets/face_active.svg') url('/assets/face_lost.svg')
+    url('/assets/face_neutral.svg') url('/assets/face_pressed.svg') url('/assets/face_won.svg')
+    url('/assets/flag_wrong.svg') url('/assets/flag.svg') url('/assets/hidden.svg')
+    url('/assets/logo.png') url('/assets/mine_red.svg') url('/assets/mine.svg')
+    url('/assets/nums_background.svg') url('/assets/pressed.svg') url('/assets/type0.svg')
+    url('/assets/type1.svg') url('/assets/type2.svg') url('/assets/type3.svg')
+    url('/assets/type4.svg') url('/assets/type5.svg') url('/assets/type6.svg')
+    url('/assets/type7.svg') url('/assets/type8.svg');
+}
