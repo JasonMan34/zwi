@@ -1,6 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-function Minesweeper() {
+export function Component() {
   return (
     <>
       <Route path="a" element={<span>Minesweeper</span>} />
@@ -9,4 +9,4 @@ function Minesweeper() {
   );
 }
 
-export default Minesweeper;
+Component.displayName = 'Minesweeper';

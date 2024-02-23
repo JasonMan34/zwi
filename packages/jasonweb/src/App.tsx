@@ -1,10 +1,9 @@
 import './index.scss';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
-import Home from './features/Home';
 import useSmoothMousePosition from './hooks/useSmoothMousePosition';
-import Minesweeper from './features/Minesweeper';
+import { router } from './router';
 
 function GradientOnMouse() {
   const mousePos = useSmoothMousePosition();
@@ -15,7 +14,7 @@ function GradientOnMouse() {
       style={{
         background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(29, 78, 216, 0.15), transparent 80%)`,
       }}
-    ></div>
+    />
   );
 }
 
@@ -23,15 +22,7 @@ function App() {
   return (
     <>
       <div className="mx-auto min-h-screen max-w-screen-xl px-6 md:px-12 lg:px-24">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="minesweeper">
-              <Route path="" element={<span>Minesweeper</span>} />
-              <Route path="sandbox" element={<span>Sandbox</span>} />
-            </Route>
-          </Routes>
-        </Router>
+        <RouterProvider router={router} />
       </div>
       <GradientOnMouse />
     </>
