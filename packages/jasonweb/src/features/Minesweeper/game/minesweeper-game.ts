@@ -18,7 +18,6 @@ export class MinesweeperGame {
   public initiated: boolean = false;
   public isGameLost: boolean = false;
   public isGameWon: boolean = false;
-  public onUpdateEventListeners: Callback[] = [];
   private gameInitEventListeners: Callback[] = [];
   private gameLostEventListeners: Callback[] = [];
   private gameWinEventListeners: Callback[] = [];
@@ -115,10 +114,6 @@ export class MinesweeperGame {
     }
 
     return this.allTiles.filter((tile) => statuses.includes(tile.status));
-  }
-
-  public onUpdate(cb: Callback) {
-    this.onUpdateEventListeners.push(cb);
   }
 
   public onGameLose(cb: Callback) {

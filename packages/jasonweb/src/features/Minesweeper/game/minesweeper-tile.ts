@@ -125,7 +125,7 @@ export class MinesweeperTile {
     });
   }
 
-  private _click() {
+  public click() {
     if (this.game.isSandbox) {
       this.status = this.isRevealed ? 'hidden' : 'revealed';
       return;
@@ -159,13 +159,7 @@ export class MinesweeperTile {
     }
   }
 
-  public click() {
-    this._click();
-    console.log(this.game);
-    this.game.onUpdateEventListeners.forEach((cb) => cb());
-  }
-
-  private _flag(flagOnly: boolean) {
+  public flag(flagOnly = false) {
     if (this.game.isSandbox) {
       this.status = this.isFlagged ? 'hidden' : 'flagged';
       this.isMine = !this.isMine;
@@ -194,12 +188,7 @@ export class MinesweeperTile {
     }
   }
 
-  public flag(flagOnly = false) {
-    this._flag(flagOnly);
-    this.game.onUpdateEventListeners.forEach((cb) => cb());
-  }
-
-  private _peak() {
+  public peak() {
     if (this.isFlagged || this.isFinal) return;
 
     this.isPeaking = true;
@@ -212,12 +201,7 @@ export class MinesweeperTile {
     }
   }
 
-  public peak() {
-    this._peak();
-    this.game.onUpdateEventListeners.forEach((cb) => cb());
-  }
-
-  private _unpeak() {
+  public unpeak() {
     if (this.isFlagged || this.isFinal) return;
 
     this.isPeaking = false;
@@ -228,10 +212,5 @@ export class MinesweeperTile {
       unrevealedAdjacent.forEach((tile) => tile.unpeak());
       return unrevealedAdjacent;
     }
-  }
-
-  public unpeak() {
-    this._unpeak();
-    this.game.onUpdateEventListeners.forEach((cb) => cb());
   }
 }

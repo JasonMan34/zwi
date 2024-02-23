@@ -1,9 +1,8 @@
 import './styles.scss';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom'; // Assuming react-router-dom is used for routing
 
-import { useForceUpdate } from '../../hooks/useForceUpdate';
 import { AutoPlayer } from './game/auto-player';
 import { MinesweeperGame } from './game/minesweeper-game';
 import { sleep } from './game/utils';
@@ -24,32 +23,7 @@ export function Component() {
 
   const autoPlayerDelay = useMemo(() => Math.round(101 - 10 * playerSpeed), [playerSpeed]);
 
-  const forceUpdate = useForceUpdate();
-  const [game, setGame] = useState(() => {
-    const innerGame = new MinesweeperGame(WIDTH, HEIGHT, MINE_COUNT, isSandbox);
-
-    const startTimer = () => {
-      timeInterval.current = setInterval(() => {
-        setTime((p) => p + 1);
-      }, 1000);
-    };
-
-    const stopTimer = () => {
-      if (timeInterval.current) {
-        clearInterval(timeInterval.current);
-      }
-    };
-
-    innerGame.onGameInit(startTimer);
-    innerGame.onGameLose(stopTimer);
-    innerGame.onGameWin(stopTimer);
-    innerGame.onUpdate(() => {
-      console.log('I was called');
-      forceUpdate();
-    });
-
-    return innerGame;
-  });
+  const [game, setGame] = useState(() => new MinesweeperGame(WIDTH, HEIGHT, MINE_COUNT, isSandbox));
   const [player, setPlayer] = useState(() => new AutoPlayer(game, !autoPlaySafe));
 
   const [time, setTime] = useState(0);
@@ -75,8 +49,10 @@ export function Component() {
     game.onGameInit(startTimer);
     game.onGameLose(stopTimer);
     game.onGameWin(stopTimer);
-    game.onUpdate(forceUpdate);
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(newGame, []);
 
   const autoPlay = async () => {
     if (game.isGameLost) {
