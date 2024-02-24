@@ -172,24 +172,72 @@
   @apply flex flex-row px-1 space-x-1;
 }
 
-#minesweeper-wrapper::after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -1;
-  content: url('/assets/border_hor_2x.png') url('/assets/border_middle_left_2x.png')
-    url('/assets/border_middle_right_2x.png') url('/assets/border_vert_2x.png')
-    url('/assets/corner_bottom_left_2x.png') url('/assets/corner_bottom_right_2x.png')
-    url('/assets/corner_up_left_2x.png') url('/assets/corner_up_right_2x.png') url('/assets/d0.svg')
-    url('/assets/d1.svg') url('/assets/d2.svg') url('/assets/d3.svg') url('/assets/d4.svg')
-    url('/assets/d5.svg') url('/assets/d6.svg') url('/assets/d7.svg') url('/assets/d8.svg')
-    url('/assets/d9.svg') url('/assets/face_active.svg') url('/assets/face_lost.svg')
-    url('/assets/face_neutral.svg') url('/assets/face_pressed.svg') url('/assets/face_won.svg')
-    url('/assets/flag_wrong.svg') url('/assets/flag.svg') url('/assets/hidden.svg')
-    url('/assets/logo.png') url('/assets/mine_red.svg') url('/assets/mine.svg')
-    url('/assets/nums_background.svg') url('/assets/pressed.svg') url('/assets/type0.svg')
-    url('/assets/type1.svg') url('/assets/type2.svg') url('/assets/type3.svg')
-    url('/assets/type4.svg') url('/assets/type5.svg') url('/assets/type6.svg')
-    url('/assets/type7.svg') url('/assets/type8.svg');
+#minesweeper-wrapper {
+  @apply flex flex-row justify-center px-4 space-x-3;
+
+  &::after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    content: url('/assets/border_hor_2x.png') url('/assets/border_middle_left_2x.png')
+      url('/assets/border_middle_right_2x.png') url('/assets/border_vert_2x.png')
+      url('/assets/corner_bottom_left_2x.png') url('/assets/corner_bottom_right_2x.png')
+      url('/assets/corner_up_left_2x.png') url('/assets/corner_up_right_2x.png')
+      url('/assets/d0.svg') url('/assets/d1.svg') url('/assets/d2.svg') url('/assets/d3.svg')
+      url('/assets/d4.svg') url('/assets/d5.svg') url('/assets/d6.svg') url('/assets/d7.svg')
+      url('/assets/d8.svg') url('/assets/d9.svg') url('/assets/face_active.svg')
+      url('/assets/face_lost.svg') url('/assets/face_neutral.svg') url('/assets/face_pressed.svg')
+      url('/assets/face_won.svg') url('/assets/flag_wrong.svg') url('/assets/flag.svg')
+      url('/assets/hidden.svg') url('/assets/logo.png') url('/assets/mine_red.svg')
+      url('/assets/mine.svg') url('/assets/nums_background.svg') url('/assets/pressed.svg')
+      url('/assets/type0.svg') url('/assets/type1.svg') url('/assets/type2.svg')
+      url('/assets/type3.svg') url('/assets/type4.svg') url('/assets/type5.svg')
+      url('/assets/type6.svg') url('/assets/type7.svg') url('/assets/type8.svg');
+  }
+}
+
+.ms-options {
+  @apply flex flex-col space-y-2;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.player-speed-label {
+  @apply block text-sm font-bold mb-2;
+}
+
+.auto-play-button {
+  @apply bg-blue-600 hover:bg-blue-800 font-semibold rounded-lg p-4 text-white;
+}
+
+.ms-border-horizontal {
+  @apply flex-1;
+}
+
+.player-speed {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+
+.ms-top-border {
+  @apply flex flex-row;
+}
+
+.ms-scoreboard {
+  @apply bg-black flex flex-row justify-center items-center;
+}
+
+.ms-border-vertical {
+  @apply self-stretch;
+}
+
+.ms-new-game-wrapper {
+  @apply flex-1 flex justify-center;
+}
+
+.ms-checkbox {
+  @apply w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 cursor-pointer mr-1;
 }

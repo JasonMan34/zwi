@@ -1,19 +1,11 @@
 <template>
   <div class="minesweeper-board">
     <div v-if="showIndexes" class="flex flex-row ml-[28px]">
-      <div
-        v-for="(col, colIndex) in game.board[0]"
-        :key="colIndex"
-        class="w-[28px] text-center"
-      >
+      <div v-for="(_, colIndex) in game.board[0]" :key="colIndex" class="w-[28px] text-center">
         {{ colIndex }}
       </div>
     </div>
-    <div
-      v-for="(row, rowIndex) in game.board"
-      :key="rowIndex"
-      class="flex flex-row justify-center"
-    >
+    <div v-for="(row, rowIndex) in game.board" :key="rowIndex" class="flex flex-row justify-center">
       <div v-if="showIndexes" class="w-[28px] text-center">{{ rowIndex }}</div>
       <Tile v-for="(tile, colIndex) in row" :key="colIndex" :tile="tile" />
     </div>

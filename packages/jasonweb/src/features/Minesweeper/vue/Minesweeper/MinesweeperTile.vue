@@ -17,7 +17,6 @@ import { MinesweeperTile } from './game/minesweeper-tile';
 // e.buttons & LMB - Left mouse is active in the event
 // e.buttons & RMB - Right mouse is active in the event
 const LMB = 0x1;
-const RMB = 0x2;
 
 // e.button === LMC - Left mouse click (up or down) was involved in the event
 // e.button === RMC - Right mouse click (up or down) was involved in the event
@@ -34,7 +33,7 @@ export default defineComponent({
     },
   },
   emits: ['click', 'flag'],
-  setup(props, context) {
+  setup(props) {
     const textClass = computed(() => {
       if (props.tile.value === 1) return 'text-blue-700';
       if (props.tile.value === 2) return 'text-green-700';

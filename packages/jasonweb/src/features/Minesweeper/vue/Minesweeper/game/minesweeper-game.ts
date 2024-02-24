@@ -8,7 +8,7 @@ export class MinesweeperGame {
   public readonly WIDTH: number;
   public readonly MINE_COUNT: number;
 
-  public isSandbox: boolean;
+  public isSandbox;
   private revealedCount: number = 0;
   public minesLeft: number;
   public board: MinesweeperTile[][];
@@ -25,7 +25,12 @@ export class MinesweeperGame {
     return this.isGameLost || this.isGameWon;
   }
 
-  constructor(width: number, height: number, mineCount: number, isSandbox = false) {
+  constructor(
+    width: number,
+    height: number,
+    mineCount: number,
+    isSandbox = false
+  ) {
     if (!Number.isInteger(width) || width <= 0) {
       throw new Error('Width parameter must be a positive integer');
     }
@@ -42,6 +47,11 @@ export class MinesweeperGame {
     this.HEIGHT = height;
     this.MINE_COUNT = mineCount;
     this.minesLeft = mineCount;
+
+    // this.WIDTH = 5;
+    // this.HEIGHT = 10;
+    // this.MINE_COUNT = 12;
+    // this.minesLeft = 12;
 
     if (isSandbox) {
       this.minesLeft = 0;
@@ -71,40 +81,59 @@ export class MinesweeperGame {
   initBoard(row: number, col: number) {
     const firstTile = this.board[row][col];
     const mines: MinesweeperTile[] = [];
-    const potentialMines = this.board.flat().filter((tile) => tile !== firstTile);
+    const potentialMines = this.board.flat().filter(tile => tile !== firstTile);
 
     shuffleArray(potentialMines);
     const minePoints = potentialMines.slice(0, this.MINE_COUNT);
+    // const minePoints = [
+    //   this.board[0][2],
+    //   this.board[0][3],
 
-    minePoints.forEach((tile) => {
+    //   this.board[2][0],
+    //   this.board[2][2],
+    //   this.board[2][4],
+
+    //   this.board[3][2],
+
+    //   this.board[4][1],
+
+    //   this.board[5][0],
+
+    //   this.board[8][0],
+    //   this.board[8][2],
+    //   this.board[8][4],
+    //   this.board[9][2],
+    // ];
+
+    minePoints.forEach(tile => {
       tile.isMine = true;
       mines.push(tile);
     });
 
-    potentialMines.forEach((tile) => tile.calculateValue());
+    potentialMines.forEach(tile => tile.calculateValue());
     firstTile.calculateValue();
 
     this.mines = mines;
     this.initiated = true;
 
-    this.gameInitEventListeners.forEach((cb) => cb());
+    this.gameInitEventListeners.forEach(cb => cb());
   }
 
   gameOver() {
     this.isGameLost = true;
-    this.mines.forEach((mine) => mine.isFlagged || mine.reveal());
+    this.mines.forEach(mine => mine.isFlagged || mine.reveal());
 
-    this.gameLostEventListeners.forEach((cb) => cb());
+    this.gameLostEventListeners.forEach(cb => cb());
   }
 
   public getActiveTiles(...statuses: TileStatus[]) {
-    const activeTiles = this.allTiles.filter((tile) => !tile.isFinal);
+    const activeTiles = this.allTiles.filter(tile => !tile.isFinal);
 
     if (statuses.length === 0) {
       return activeTiles;
     }
 
-    return activeTiles.filter((tile) => statuses.includes(tile.status));
+    return activeTiles.filter(tile => statuses.includes(tile.status));
   }
 
   public getAllTiles(...statuses: TileStatus[]) {
@@ -112,7 +141,7 @@ export class MinesweeperGame {
       return this.allTiles;
     }
 
-    return this.allTiles.filter((tile) => statuses.includes(tile.status));
+    return this.allTiles.filter(tile => statuses.includes(tile.status));
   }
 
   public onGameLose(cb: Callback) {
@@ -133,7 +162,9 @@ export class MinesweeperGame {
       this.onGameWin(() => resolve());
 
       if (timeout) {
-        setTimeout(() => reject(), timeout);
+        setTimeout(() => {
+          reject();
+        }, timeout);
       }
     });
   }
@@ -143,8 +174,8 @@ export class MinesweeperGame {
     if (this.revealedCount === this.allTiles.length - this.mines.length) {
       this.isGameWon = true;
       this.minesLeft = 0;
-      this.getAllTiles('hidden').forEach((tile) => tile.flag(true));
-      this.gameWinEventListeners.forEach((cb) => cb());
+      this.getAllTiles('hidden').forEach(tile => tile.flag(true));
+      this.gameWinEventListeners.forEach(cb => cb());
     }
   }
 
