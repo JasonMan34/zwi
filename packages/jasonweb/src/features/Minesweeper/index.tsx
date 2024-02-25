@@ -1,3 +1,5 @@
+import './styles.scss';
+
 import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { createApp } from 'vue';
@@ -18,13 +20,14 @@ export function Component() {
   }, []);
 
   return (
-    <div className="min-h-screen px-12">
-      <div className="mt-8 max-w-screen-xl mx-auto">
+    <div className="min-h-screen px-12 max-w-screen-xl mx-auto">
+      <div className="pt-8 max-w-screen-xl mx-auto">
         <NavLink to="..">
           <button
-            className="w-10 h-10"
+            className="back-button"
             type="button"
             aria-label="back"
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: BackIcon }}
           />
         </NavLink>
