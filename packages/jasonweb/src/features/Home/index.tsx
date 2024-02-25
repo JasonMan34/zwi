@@ -17,17 +17,15 @@ function Header() {
         <h6 className="mt-4 leading-normal max-w-md">
           I have a passion for puzzles and problem-solving, and I love sharing that passion with
           others
+          <br />
+          <br />
+          <NavLink
+            to="/minesweeper"
+            className="text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
+          >
+            Check out my minesweeper game, with an auto player!
+          </NavLink>
         </h6>
-      </div>
-
-      <div>
-        TODO: Move this to a proper place
-        <br />
-        <NavLink to="/minesweeper">
-          <button type="button" aria-label="back">
-            Go to minesweeper
-          </button>
-        </NavLink>
       </div>
 
       <div>
@@ -74,6 +72,35 @@ function Header() {
                 aria-hidden="true"
               >
                 <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              className="block hover:text-slate-200"
+              href="mailto:itamartsvi@gmail.com"
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Send me an email"
+              title="Email"
+            >
+              <span className="sr-only">Email</span>
+              <svg
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 493.497 493.497"
+                className="h-6 w-6"
+                aria-hidden="true"
+              >
+                <path
+                  d="M444.556,85.218H48.942C21.954,85.218,0,107.171,0,134.16v225.177c0,26.988,21.954,48.942,48.942,48.942h395.613
+	c26.988,0,48.941-21.954,48.941-48.942V134.16C493.497,107.171,471.544,85.218,444.556,85.218z M460.87,134.16v225.177
+	c0,2.574-0.725,4.924-1.793,7.09L343.74,251.081l117.097-117.097C460.837,134.049,460.87,134.096,460.87,134.16z M32.628,359.336
+	V134.16c0-0.064,0.033-0.11,0.033-0.175l117.097,117.097L34.413,366.426C33.353,364.26,32.628,361.911,32.628,359.336z
+	 M251.784,296.902c-2.692,2.691-7.378,2.691-10.07,0L62.667,117.846h368.172L251.784,296.902z M172.827,274.152l45.818,45.819
+	c7.512,7.511,17.493,11.645,28.104,11.645c10.61,0,20.592-4.134,28.104-11.645l45.82-45.819l101.49,101.499H71.327L172.827,274.152z
+	"
+                />
               </svg>
             </a>
           </li>

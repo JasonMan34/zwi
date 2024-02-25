@@ -21,7 +21,7 @@ export function Component() {
 
   return (
     <div className="min-h-screen px-12 max-w-screen-xl mx-auto">
-      <div className="pt-8 max-w-screen-xl mx-auto">
+      <div className="pt-8">
         <NavLink to="..">
           <button
             className="back-button"
