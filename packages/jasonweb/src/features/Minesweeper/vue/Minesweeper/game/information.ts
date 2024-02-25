@@ -1,12 +1,6 @@
-/* eslint-disable max-classes-per-file */
-import { MinesweeperGame } from './minesweeper-game';
-import { MinesweeperTile } from './minesweeper-tile';
-import {
-  arrayContains,
-  arrayDifference,
-  arrayIntersection,
-  arraysAreEqual,
-} from './utils';
+import { type MinesweeperGame } from './minesweeper-game';
+import { type MinesweeperTile } from './minesweeper-tile';
+import { arrayContains, arrayDifference, arrayIntersection, arraysAreEqual } from './utils';
 
 export type MineDataRelation = 'equals' | 'minimum' | 'maximum';
 
@@ -22,10 +16,7 @@ export interface DataNode {
 }
 
 /** Returns relation for the difference between two data nodes, if such relation exists */
-const getDifferenceRelation = (
-  node1: DataNode,
-  node2: DataNode
-): MineDataRelation | undefined => {
+const getDifferenceRelation = (node1: DataNode, node2: DataNode): MineDataRelation | undefined => {
   const a = node1.mines;
   const b = node2.mines;
 
@@ -73,10 +64,7 @@ export class Information {
     this.game = game;
   }
 
-  static normalizeNode(
-    tilesOrNode: MinesweeperTile[] | DataNode,
-    mines?: number
-  ) {
+  static normalizeNode(tilesOrNode: MinesweeperTile[] | DataNode, mines?: number) {
     let newNode: DataNode;
     if (Array.isArray(tilesOrNode) && mines !== undefined) {
       newNode = {
@@ -107,10 +95,7 @@ export class Information {
     }
 
     // Maximum tiles.length mines useless
-    if (
-      node.mines.relation === 'maximum' &&
-      node.mines.value === node.tiles.length
-    ) {
+    if (node.mines.relation === 'maximum' && node.mines.value === node.tiles.length) {
       return false;
     }
 
@@ -120,8 +105,7 @@ export class Information {
   static isMeaningfulNode(node: DataNode) {
     return (
       node.mines.value === 0 ||
-      ((node.mines.relation === 'equals' ||
-        node.mines.relation === 'minimum') &&
+      ((node.mines.relation === 'equals' || node.mines.relation === 'minimum') &&
         node.mines.value === node.tiles.length)
     );
   }
@@ -135,9 +119,7 @@ export class Information {
     if (!Information.isValidNode(newNode)) return;
 
     // Check if we already have information about these tiles
-    const existingTilesInfo = this.data.filter(node =>
-      arraysAreEqual(node.tiles, newNode.tiles)
-    );
+    const existingTilesInfo = this.data.filter((node) => arraysAreEqual(node.tiles, newNode.tiles));
     for (let i = 0; i < existingTilesInfo.length; i++) {
       const existingInfo = existingTilesInfo[i];
 
@@ -152,8 +134,7 @@ export class Information {
         if (
           (newNode.mines.relation === 'maximum' &&
             newNode.mines.value < existingInfo.mines.value) ||
-          (newNode.mines.relation === 'minimum' &&
-            newNode.mines.value > existingInfo.mines.value)
+          (newNode.mines.relation === 'minimum' && newNode.mines.value > existingInfo.mines.value)
         ) {
           const existingInfoIndex = this.data.indexOf(existingInfo);
           this.data.splice(existingInfoIndex, 1);
@@ -230,10 +211,7 @@ export class Information {
       };
 
       this.add(inferredDataNode);
-    } else if (
-      node.mines.relation !== 'minimum' &&
-      otherNode.mines.relation !== 'minimum'
-    ) {
+    } else if (node.mines.relation !== 'minimum' && otherNode.mines.relation !== 'minimum') {
       // We only care about this if the arrays don't contain each other
       // Inferring data from intersection
       const inferredDataNode: DataNode = {
@@ -249,8 +227,8 @@ export class Information {
   }
 
   /**
-   * Infers data based on available data and what was already inferred. Returns
-   * false if no new information can be inferred. True otherwise
+   * Infers data based on available data and what was already inferred. Returns false if no new
+   * information can be inferred. True otherwise
    */
   inferData(): boolean {
     // For each node, starting at lastInferIndex+1, infer against all other nodes
@@ -258,7 +236,7 @@ export class Information {
     const start = this.lastInferIndex + 1;
 
     this.data.slice(start).forEach((node, index) => {
-      this.data.slice(0, start + index).forEach(otherNode => {
+      this.data.slice(0, start + index).forEach((otherNode) => {
         this.infer(node, otherNode);
       });
     });
@@ -328,10 +306,7 @@ export class Information {
 
     return this.foundMeaningfulData;
   }
-  /**
-   * Infers data for minesLeft. Returns false if no new information can be
-   * inferred. True otherwise
-   */
+  /** Infers data for minesLeft. Returns false if no new information can be inferred. True otherwise */
   inferMinesLeftData() {
     // For each node, starting at lastInferIndex+1, infer against all other nodes
     const originalDataCount = this.data.length;
@@ -340,9 +315,7 @@ export class Information {
     this.data
       .slice(start)
       .some((node, index) =>
-        this.data
-          .slice(0, start + index)
-          .some(otherNode => this.inferSum(node, otherNode))
+        this.data.slice(0, start + index).some((otherNode) => this.inferSum(node, otherNode)),
       );
 
     this.lastInferIndex = originalDataCount;
@@ -365,7 +338,7 @@ export class Information {
     // Do this until we've been through all nodes
     // Should be much faster, especially if we have to go 3+ levels deep
     // We can finish with 15 data nodes instead of 2000+ to reach the conclusion
-    this.data = this.data.filter(node => node.mines.relation === 'equals');
+    this.data = this.data.filter((node) => node.mines.relation === 'equals');
     while (!this.foundMeaningfulData && canInferMoreData) {
       canInferMoreData = this.inferMinesLeftData();
     }

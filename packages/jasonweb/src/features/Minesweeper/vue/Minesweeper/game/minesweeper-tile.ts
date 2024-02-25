@@ -1,4 +1,5 @@
 import { clamp } from '@vueuse/core';
+
 import type { MinesweeperGame } from './minesweeper-game';
 
 // Final = Revealed tile, and all adjacent tiles are also revealed / flagged
@@ -67,7 +68,7 @@ export class MinesweeperTile {
     return adjacent;
   }
 
-  public forAdjacent(fn: Parameters<Array<MinesweeperTile>['forEach']>[0]) {
+  public forAdjacent(fn: Parameters<MinesweeperTile[]['forEach']>[0]) {
     return this.getAdjacent().forEach(fn);
   }
 

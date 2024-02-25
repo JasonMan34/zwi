@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     '@jasonman34',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', '*.vue'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {

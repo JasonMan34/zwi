@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { NavLink } from 'react-router-dom';
 
+import useSmoothMousePosition from '../../hooks/useSmoothMousePosition';
 import { type ExperienceItem, experiences } from './experiences';
 
 function Header() {
@@ -192,15 +193,32 @@ function Main() {
   );
 }
 
-function Home() {
+function GradientOnMouse() {
+  const mousePos = useSmoothMousePosition();
+
   return (
     <div
-      id="home"
-      className="lg:flex lg:justify-between lg:gap-4 max-w-screen-xl mx-auto min-h-screen px-6 md:px-12 lg:px-24"
-    >
-      <Header />
-      <Main />
-    </div>
+      className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute"
+      style={{
+        background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(29, 78, 216, 0.15), transparent 80%)`,
+      }}
+    />
+  );
+}
+
+function Home() {
+  return (
+    <>
+      <div
+        id="home"
+        className="lg:flex lg:justify-between lg:gap-4 max-w-screen-xl mx-auto min-h-screen px-6 md:px-12 lg:px-24"
+      >
+        <Header />
+        <Main />
+      </div>
+
+      <GradientOnMouse />
+    </>
   );
 }
 

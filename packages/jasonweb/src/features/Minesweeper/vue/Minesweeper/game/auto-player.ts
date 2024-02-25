@@ -1,6 +1,6 @@
 import { Information } from './information';
-import { MinesweeperGame } from './minesweeper-game';
-import { MinesweeperTile } from './minesweeper-tile';
+import { type MinesweeperGame } from './minesweeper-game';
+import { type MinesweeperTile } from './minesweeper-tile';
 import { sleep } from './utils';
 
 type FlagMove = {
@@ -27,18 +27,16 @@ export class AutoPlayer {
 
   /** Flag all remaining adjacent tiles a tile that needs it */
   private getSimpleFlagMoves(): FlagMove[] {
-    const tileToFlagAdjacent = this.game
-      .getActiveTiles('revealed')
-      .find(tile => {
-        const hiddenAdjacent = tile.getAdjacent('hidden').length;
-        const flagAdjacent = tile.getAdjacent('flagged').length;
-        return tile.value - flagAdjacent === hiddenAdjacent;
-      });
+    const tileToFlagAdjacent = this.game.getActiveTiles('revealed').find((tile) => {
+      const hiddenAdjacent = tile.getAdjacent('hidden').length;
+      const flagAdjacent = tile.getAdjacent('flagged').length;
+      return tile.value - flagAdjacent === hiddenAdjacent;
+    });
 
     if (tileToFlagAdjacent) {
       const tilesToFlag = tileToFlagAdjacent.getAdjacent('hidden');
 
-      return tilesToFlag.map(tile => ({
+      return tilesToFlag.map((tile) => ({
         action: 'flag',
         tile,
       }));
@@ -49,7 +47,7 @@ export class AutoPlayer {
 
   /** Click a tile that is all flagged up */
   private getSimpleClickMoves(): ClickMove[] {
-    const tileToClick = this.game.getActiveTiles('revealed').find(tile => {
+    const tileToClick = this.game.getActiveTiles('revealed').find((tile) => {
       const flagAdjacent = tile.getAdjacent('flagged').length;
       return tile.value === flagAdjacent;
     });
@@ -71,12 +69,11 @@ export class AutoPlayer {
     const handled: MinesweeperTile[] = [];
 
     const info = new Information(this.game);
-    revealed.some(srcTile => {
+    revealed.some((srcTile) => {
       if (handled.includes(srcTile)) return;
 
       const srcHiddenTiles = srcTile.getAdjacent('hidden');
-      const srcPotentialMines =
-        srcTile.value - srcTile.getAdjacent('flagged').length;
+      const srcPotentialMines = srcTile.value - srcTile.getAdjacent('flagged').length;
       info.add(srcHiddenTiles, srcPotentialMines);
       handled.push(srcTile);
 
@@ -100,13 +97,13 @@ export class AutoPlayer {
     if (info.foundMeaningfulData) {
       const data = info.meaningfulData[0];
       if (data.mines.value === 0) {
-        return data.tiles.map(tile => ({
+        return data.tiles.map((tile) => ({
           action: 'click',
           tile,
         }));
       }
 
-      return data.tiles.map(tile => ({
+      return data.tiles.map((tile) => ({
         action: 'flag',
         tile,
       }));
@@ -121,7 +118,7 @@ export class AutoPlayer {
       action: 'click',
     };
 
-    this.game.getCorners().some(tile => {
+    this.game.getCorners().some((tile) => {
       if (tile.status === 'hidden') {
         move.tile = tile;
         return true;
@@ -171,11 +168,7 @@ export class AutoPlayer {
   }
 
   playNextMove() {
-    if (
-      this.game.isGameLost ||
-      this.game.isGameWon ||
-      this.moveQueue.length === 0
-    ) {
+    if (this.game.isGameLost || this.game.isGameWon || this.moveQueue.length === 0) {
       return;
     }
 
@@ -197,10 +190,7 @@ export class AutoPlayer {
       this.delay = delay;
     }
 
-    while (
-      !this.game.isGameOver &&
-      (this.hasNextMove() || this.fillMoveQueue())
-    ) {
+    while (!this.game.isGameOver && (this.hasNextMove() || this.fillMoveQueue())) {
       if (this.delay) {
         // eslint-disable-next-line no-await-in-loop
         await sleep(this.delay);

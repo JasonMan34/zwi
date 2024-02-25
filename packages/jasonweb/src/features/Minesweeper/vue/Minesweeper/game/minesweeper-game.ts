@@ -1,5 +1,6 @@
 import shuffleArray from 'shuffle-array';
-import { MinesweeperTile, TileStatus } from './minesweeper-tile';
+
+import { MinesweeperTile, type TileStatus } from './minesweeper-tile';
 
 export type Callback = () => void | Promise<void>;
 
@@ -25,12 +26,7 @@ export class MinesweeperGame {
     return this.isGameLost || this.isGameWon;
   }
 
-  constructor(
-    width: number,
-    height: number,
-    mineCount: number,
-    isSandbox = false
-  ) {
+  constructor(width: number, height: number, mineCount: number, isSandbox = false) {
     if (!Number.isInteger(width) || width <= 0) {
       throw new Error('Width parameter must be a positive integer');
     }
@@ -81,7 +77,7 @@ export class MinesweeperGame {
   initBoard(row: number, col: number) {
     const firstTile = this.board[row][col];
     const mines: MinesweeperTile[] = [];
-    const potentialMines = this.board.flat().filter(tile => tile !== firstTile);
+    const potentialMines = this.board.flat().filter((tile) => tile !== firstTile);
 
     shuffleArray(potentialMines);
     const minePoints = potentialMines.slice(0, this.MINE_COUNT);
@@ -105,35 +101,35 @@ export class MinesweeperGame {
     //   this.board[9][2],
     // ];
 
-    minePoints.forEach(tile => {
+    minePoints.forEach((tile) => {
       tile.isMine = true;
       mines.push(tile);
     });
 
-    potentialMines.forEach(tile => tile.calculateValue());
+    potentialMines.forEach((tile) => tile.calculateValue());
     firstTile.calculateValue();
 
     this.mines = mines;
     this.initiated = true;
 
-    this.gameInitEventListeners.forEach(cb => cb());
+    this.gameInitEventListeners.forEach((cb) => cb());
   }
 
   gameOver() {
     this.isGameLost = true;
-    this.mines.forEach(mine => mine.isFlagged || mine.reveal());
+    this.mines.forEach((mine) => mine.isFlagged || mine.reveal());
 
-    this.gameLostEventListeners.forEach(cb => cb());
+    this.gameLostEventListeners.forEach((cb) => cb());
   }
 
   public getActiveTiles(...statuses: TileStatus[]) {
-    const activeTiles = this.allTiles.filter(tile => !tile.isFinal);
+    const activeTiles = this.allTiles.filter((tile) => !tile.isFinal);
 
     if (statuses.length === 0) {
       return activeTiles;
     }
 
-    return activeTiles.filter(tile => statuses.includes(tile.status));
+    return activeTiles.filter((tile) => statuses.includes(tile.status));
   }
 
   public getAllTiles(...statuses: TileStatus[]) {
@@ -141,23 +137,35 @@ export class MinesweeperGame {
       return this.allTiles;
     }
 
-    return this.allTiles.filter(tile => statuses.includes(tile.status));
+    return this.allTiles.filter((tile) => statuses.includes(tile.status));
   }
 
   public onGameLose(cb: Callback) {
-    this.gameLostEventListeners.push(cb);
+    if (this.isGameLost) {
+      cb();
+    } else {
+      this.gameLostEventListeners.push(cb);
+    }
   }
 
   public onGameWin(cb: Callback) {
-    this.gameWinEventListeners.push(cb);
+    if (this.isGameWon) {
+      cb();
+    } else {
+      this.gameWinEventListeners.push(cb);
+    }
   }
 
   public onGameInit(cb: Callback) {
-    this.gameInitEventListeners.push(cb);
+    if (this.initiated) {
+      cb();
+    } else {
+      this.gameInitEventListeners.push(cb);
+    }
   }
 
   public async waitForEnd(timeout?: number) {
-    return new Promise<void>((resolve, reject) => {
+    return await new Promise<void>((resolve, reject) => {
       this.onGameLose(() => resolve());
       this.onGameWin(() => resolve());
 
@@ -174,8 +182,8 @@ export class MinesweeperGame {
     if (this.revealedCount === this.allTiles.length - this.mines.length) {
       this.isGameWon = true;
       this.minesLeft = 0;
-      this.getAllTiles('hidden').forEach(tile => tile.flag(true));
-      this.gameWinEventListeners.forEach(cb => cb());
+      this.getAllTiles('hidden').forEach((tile) => tile.flag(true));
+      this.gameWinEventListeners.forEach((cb) => cb());
     }
   }
 
