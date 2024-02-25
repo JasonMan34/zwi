@@ -1,11 +1,13 @@
 import './styles.scss';
 
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createApp } from 'vue';
 
 import Minesweeper from './vue/Minesweeper/Minesweeper.vue'; // Import your Vue component
 
 export function Component() {
+  const navigate = useNavigate();
   const vueComponentRef = useRef(null);
 
   useEffect(() => {
@@ -17,7 +19,16 @@ export function Component() {
     return () => ms.unmount();
   }, []);
 
-  return <div className="mt-24" ref={vueComponentRef} />;
+  return (
+    <div className="min-h-screen px-6 md:px-12 lg:px-24">
+      <div className="mt-8 max-w-screen-xl mx-auto">
+        <button type="button" aria-label="back" onClick={() => navigate('..')}>
+          Back
+        </button>
+      </div>
+      <div className="mt-40" ref={vueComponentRef} />
+    </div>
+  );
 }
 
 Component.displayName = 'Minesweeper';

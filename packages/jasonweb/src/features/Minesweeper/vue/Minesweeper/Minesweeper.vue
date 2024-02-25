@@ -122,7 +122,7 @@ export default defineComponent({
     const autoPlaySafe = ref(false);
     const restartOnFailure = ref(true);
     const playerSpeed = ref(10);
-    const autoPlayerDelay = computed(() => Math.round(101 - 10 * playerSpeed.value));
+    const autoPlayerDelay = computed(() => Math.max(10, 100 / playerSpeed.value));
 
     provide(ShowIndexesKey, showIndexes);
     const { time, start, stop } = useStopwatch();

@@ -185,7 +185,7 @@ function Home() {
   return (
     <div
       id="home"
-      className="lg:flex lg:justify-between lg:gap-4 max-w-screen-xl mx-auto min-h-screen"
+      className="lg:flex lg:justify-between lg:gap-4 max-w-screen-xl mx-auto min-h-screen px-6 md:px-12 lg:px-24"
     >
       <Header />
       <Main />

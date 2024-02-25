@@ -173,7 +173,7 @@
 }
 
 #minesweeper-wrapper {
-  @apply flex flex-row justify-center px-4 space-x-3;
+  @apply flex flex-row justify-center space-x-8;
 
   &::after {
     position: absolute;

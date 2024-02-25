@@ -21,9 +21,7 @@ function GradientOnMouse() {
 function App() {
   return (
     <>
-      <div className="mx-auto min-h-screen max-w-screen-xl px-6 md:px-12 lg:px-24">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
       <GradientOnMouse />
     </>
   );
