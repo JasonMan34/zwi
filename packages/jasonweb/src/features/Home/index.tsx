@@ -6,7 +6,7 @@ import { type ExperienceItem, experiences } from './experiences';
 
 function Header() {
   return (
-    <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 py-12">
+    <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 pt-12">
       <div>
         <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
           Itamar (Jason) Zwi
@@ -14,7 +14,7 @@ function Header() {
         <h4 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
           Full Stack Developer
         </h4>
-        <h6 className="mt-4 leading-normal max-w-md">
+        <h6 className="mt-4 leading-normal max-w-md mb-8">
           I have a passion for puzzles and problem-solving, and I love sharing that passion with
           others
           <br />
@@ -129,7 +129,7 @@ function About() {
     <section id="about" className="mb-16 md:mb-24 lg:mb-36">
       <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
         <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
-          Experience
+          About
         </h2>
       </div>
       I am a <Link href="https://www.linkedin.com/in/itamar-zwi/">Full Stack Developer</Link> with a
@@ -154,13 +154,13 @@ function ExperienceCard(props: ExperienceItem) {
           className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
           aria-label={`${start} to ${end}`}
         >
-          {start} —<br /> {end}
+          {start} —<br className="hidden lg:block" /> {end}
         </header>
         <div className="z-10 sm:col-span-6">
           <h3 className="font-medium leading-snug text-slate-200">
             <div>
               <span className="inline-flex items-baseline font-medium leading-tight text-slate-200 text-base">
-                {title} · <span className="inline-block">{company}</span>
+                {title} · {company}
               </span>
             </div>
             <div>
