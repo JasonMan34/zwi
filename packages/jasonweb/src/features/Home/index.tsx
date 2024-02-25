@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { NavLink } from 'react-router-dom';
 
 import { type ExperienceItem, experiences } from './experiences';
 
@@ -16,6 +17,16 @@ function Header() {
           I have a passion for puzzles and problem-solving, and I love sharing that passion with
           others
         </h6>
+      </div>
+
+      <div>
+        TODO: Move this to a proper place
+        <br />
+        <NavLink to="/minesweeper">
+          <button type="button" aria-label="back">
+            Go to minesweeper
+          </button>
+        </NavLink>
       </div>
 
       <div>
