@@ -1,1 +1,0 @@
-# The ZWI project monorepo
