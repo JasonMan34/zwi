@@ -1,11 +1,13 @@
 # @jasonman34/eslint-config
 
-> ESLint configuration by the ZWI project
+> My eslint configuration
 
 ## Installation
 
 ```
-npm add -D @jasonman34/eslint-config
+npm i -D @jasonman34/eslint-config
+pnpm add -D @jasonman34/eslint-config
+yarn add -D @jasonman34/eslint-config
 ```
 
 ## Usage
