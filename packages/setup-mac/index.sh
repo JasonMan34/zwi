@@ -59,110 +59,6 @@ setup_nvm() {
   corepack enable
 }
 
-setup_orbit_autocomplete() {
-  local orbit_autocomplete="#compdef orbit
-
-function _orbit {
-  local line
-
-  _arguments -C \\
-    '1:test:(aws_config boot git_prune_branches init_data port_forward pull purge_sqs_queues skaffold update_terminal_helpers)' \\
-    '*::arg:->args'
-
-  case \$line[1] in
-  port_forward)
-    _arguments '1:pods:(\$(kubectl get pods | grep mongo | awk \"{ print \\\$1 }\" | sed \"s/-mongo.*//\"))'
-    ;;
-  purge_sqs_queues)
-    _arguments '1:prefix:(dev-)'
-    ;;
-  esac
-}"
-
-  local orbit_pfo_autocomplete="#compdef __orbit_port_forward
-
-function ___orbit_port_forward {
-  _arguments '1:pods:(\$(kubectl get pods | grep mongo | awk \"{ print \\\$1 }\" | sed \"s/-mongo.*//\"))'
-}"
-
-  mkdir -p "$HOME/.oh-my-zsh/completions"
-  echo "$orbit_autocomplete" >"$HOME/.oh-my-zsh/completions/_orbit"
-  echo "$orbit_pfo_autocomplete" >"$HOME/.oh-my-zsh/completions/___orbit_port_forward"
-}
-
-add_terminal_helpers() {
-  # Slidin' this here to prevent people from pulling wrong :)
-  git config --global pull.ff only
-
-  # Change to terminal helpers directory (.../amplicy/notes-dev)
-  cd "$SCRIPTPATH"
-  cd "../notes-dev"
-
-  # declaration and assignment separated for safety
-  # see https://www.shellcheck.net/wiki/SC2155
-  local helpersFile
-  helpersFile="$(cat terminal-helpers.md)"
-
-  local startStr="<pre id=\"script\">"
-  local endStr="</pre>"
-  local rest=${helpersFile#*"$startStr"}
-  local script=${rest%%"$endStr"*}
-
-  local zprofile="$HOME/.zprofile"
-  local zprofile_contents
-  zprofile_contents=$(cat "$zprofile")
-
-  # Take repos/projects from previous .zprofile
-  if [[ $zprofile_contents =~ (HOME/.*/amplicy) ]]; then
-    script="${script/HOME\/projects\/amplicy/${BASH_REMATCH[1]}}"
-  fi
-
-  # Take username/password for orbit_init from previous .zprofile
-  if [[ $zprofile_contents =~ username=(\"[!\#-~]+\") ]]; then
-    script="${script/\"user\"/${BASH_REMATCH[1]}}"
-  fi
-  if [[ $zprofile_contents =~ password=(\"[!\#-~]+\") ]]; then
-    script="${script/\"User12345!\"/${BASH_REMATCH[1]}}"
-  fi
-
-  # Take ARN from previous .zprofile
-  if [[ $zprofile_contents =~ arn=\"([!\#-~]+)\" ]]; then
-    script="${script/YOUR_ARN_HERE/${BASH_REMATCH[1]}}"
-  fi
-
-  # Take AWS_CONFIG from previous .zprofile
-  if [[ "$zprofile_contents" =~ "AWS CONFIG" ]]; then
-    script="${script}
-### AWS CONFIG ###"
-
-    while IFS= read -r line; do
-      script="${script}
-${line}"
-    done < <(grep -o "export AWS_.*" "$zprofile")
-  fi
-
-  # Override terminal helpers
-  if grep -q "############### Orbit's Terminal Helpers ###############" "$zprofile"; then
-    sed -i "" "/############### Orbit's Terminal Helpers ###############/,$ d" "$zprofile"
-    script="${script:1}"
-  fi
-
-  echo "$script" >>"$HOME/.zprofile"
-  eval "$script"
-
-  setup_orbit_autocomplete
-
-  echo -e "Your ${BOLD}.zprofile${DEFAULT} has been updated with the current terminal helpers"
-}
-
-# Fast add_terminal_helpers
-if ! [[ "$1" = "" ]]; then
-  add_terminal_helpers
-  exit 0
-fi
-
-# First time installation!
-
 # Ensure Homebrew is installed
 if ! command -v "brew" &>/dev/null; then
   echo "Please install Homebrew then run the script again"
@@ -188,7 +84,6 @@ else
 fi
 
 ## All good, let's run the script!
-add_terminal_helpers
 ohmyzsh_installation
 brew_installations
 vscode_extensions_installations
