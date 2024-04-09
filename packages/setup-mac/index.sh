@@ -65,29 +65,8 @@ if ! command -v "brew" &>/dev/null; then
   exit 1
 fi
 
-# Ensure AWS_PREFIX is set
-if [[ "$AWS_PREFIX" = "dev-" || "$REPOS_DIR" = "" ]]; then
-  echo "You have not set the config parameters. Please edit them now"
-  if command -v "code" &>/dev/null; then
-    code "$SCRIPT"
-  else
-    open -a TextEdit "$SCRIPT"
-  fi
-
-  exit 1
-else
-  read -r -p "Your AWS prefix is { $AWS_PREFIX }. Is that okay? [Y/n] " response
-  if [[ "$response" =~ ^[nN]$ ]]; then
-    echo "Cancelling..."
-    exit 0
-  fi
-fi
-
 ## All good, let's run the script!
 ohmyzsh_installation
 brew_installations
 vscode_extensions_installations
-aws_cli_installation
 setup_nvm
-setup_dev_overlay
-git config --global core.hooksPath githooks
