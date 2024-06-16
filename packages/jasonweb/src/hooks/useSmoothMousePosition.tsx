@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import useMousePosition from './useMousePosition';
 
-const useSmoothMousePosition = (smoothingFactor = 0.04) => {
+const useSmoothMousePosition = (smoothingFactor = 0.06) => {
   const rawMousePosition = useMousePosition();
   const [smoothedPosition, setSmoothedPosition] = useState(() => ({
     x: rawMousePosition.current.x,

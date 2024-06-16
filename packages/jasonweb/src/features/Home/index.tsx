@@ -225,7 +225,7 @@ function GradientOnMouse() {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute"
+      className="pointer-events-none fixed inset-0 z-30 transition duration-300 h-[100%]"
       style={{
         background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(29, 78, 216, 0.15), transparent 80%)`,
       }}
