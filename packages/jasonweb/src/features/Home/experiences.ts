@@ -48,8 +48,7 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    start: new Date(2022, 10, 27),
-    end: new Date(2024, 2, 1),
+    start: new Date(2024, 8, 15),
     title: 'Senior Full Stack Developer',
     company: 'Assembrix',
     description:
