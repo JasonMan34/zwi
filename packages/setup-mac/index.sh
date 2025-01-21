@@ -4,10 +4,7 @@ set -o pipefail
 
 REPOS_DIR="repos"
 
-############################# SCRIPT #############################
 clear
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
 
 DEFAULT="\x1b[0m"
 BOLD="\x1b[1;37m"
@@ -17,18 +14,6 @@ ohmyzsh_installation() {
 }
 
 brew_installations() {
-  # nvm needs to add lines to .zshrc to fully install
-  brew install nvm --force
-
-  local loadNvm
-  read -r -d '' loadNvm <<EOF
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-EOF
-  echo "$loadNvm" >>"$HOME/.zshrc"
-  eval "$loadNvm"
-
   brew install --cask iterm2 --force
   brew install --cask alt-tab --force
   brew install --cask rectangle --force
@@ -52,21 +37,27 @@ vscode_extensions_installations() {
   code --install-extension xabikos.JavaScriptSnippets       # JavaScript (ES6) snippet
 }
 
-setup_nvm() {
-  nvm install lts/iron
-  nvm alias default lts/iron
-  nvm use default
+nvm_setup() {
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+  nvm install --lts
+  nvm alias default lts/*
   corepack enable
 }
 
 # Ensure Homebrew is installed
 if ! command -v "brew" &>/dev/null; then
-  echo "Please install Homebrew then run the script again"
-  exit 1
+  echo "No Homebrew on system, attempting to install..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  . ~/.zshrc
 fi
 
 ## All good, let's run the script!
 ohmyzsh_installation
 brew_installations
 vscode_extensions_installations
-setup_nvm
+nvm_setup
