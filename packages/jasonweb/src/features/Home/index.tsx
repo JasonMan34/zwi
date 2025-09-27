@@ -78,7 +78,7 @@ function Header() {
           <li>
             <a
               className="block hover:text-slate-200"
-              href="mailto:itamartsvi@gmail.com"
+              href="mailto:itamarzwi@gmail.com"
               target="_blank"
               rel="noreferrer noopener"
               aria-label="Send me an email"
